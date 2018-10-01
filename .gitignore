@@ -1,0 +1,7 @@
+.idea
+/lib/
+/out/
+SpringQuizApi.iml
+/target/
+/web/
+/src/main/resources/persistence.properties
