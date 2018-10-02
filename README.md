@@ -7,7 +7,7 @@ API will have admin functionality (adding, deleting, editing questions), for use
 
 Other users will simply be able to access questions and alternatives.
 
-Admin endpoints :
+Endpoints :
 
 GET 	/questions - returning all questions - access: user, admin
 
