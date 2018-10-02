@@ -9,15 +9,15 @@ Other users will simply be able to access questions and alternatives.
 
 Admin endpoints :
 
-GET 	/admin/questions - returning all questions
+GET 	/questions - returning all questions - access: user, admin
 
-GET 	/admin/questions/{questionId} - returning question with id
+GET 	/questions/{questionId} - returning question with id - access: user, admin
 
-POST 	/admin/questions - adding new question
+POST 	/questions - adding new question - access: admin
 
-PUT 	/admin/questions - updating / adding question
+PUT 	/questions - updating / adding question - access: admin
 
-DELETE	/admin/questions/{questionId} - deleting question with id
+DELETE	/questions/{questionId} - deleting question with id - access: admin
 
 
 
