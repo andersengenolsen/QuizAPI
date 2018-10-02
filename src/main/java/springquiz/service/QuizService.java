@@ -61,4 +61,10 @@ public class QuizService implements Service<Question> {
     public void delete(Question T) {
         dao.delete(T);
     }
+
+    @Override
+    @Transactional
+    public void update(Question question) {
+        dao.update(question);
+    }
 }

@@ -18,6 +18,11 @@ public interface Dao<T> {
     void save(T t);
 
     /**
+     * @param t object to update
+     */
+    void update(T t);
+
+    /**
      * @return Object T in database with given id
      */
     T get(int id);

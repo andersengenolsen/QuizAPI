@@ -34,4 +34,6 @@ public interface Service<T> {
      * @param T object to delete
      */
     void delete(T T);
+
+    void update(T t);
 }

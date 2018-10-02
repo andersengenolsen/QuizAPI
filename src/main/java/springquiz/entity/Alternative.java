@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Entity
 @Table(name = "alternative")
@@ -74,5 +75,21 @@ public class Alternative {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Alternative that = (Alternative) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(alternativeTxt, that.alternativeTxt) &&
+                Objects.equals(question, that.question) &&
+                Objects.equals(isCorrect, that.isCorrect);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, alternativeTxt, question, isCorrect);
     }
 }

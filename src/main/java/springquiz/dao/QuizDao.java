@@ -29,12 +29,41 @@ public class QuizDao implements Dao<Question> {
     }
 
     /**
+     * Saving question to the database.
+     * The question's alternative list must be updated first.
+     *
      * @param question to save
+     * @see Question#validateAlternatives()
      */
     @Override
     public void save(Question question) {
         Session session = factory.getCurrentSession();
+        question.validateAlternatives();
         session.saveOrUpdate(question);
+    }
+
+    /**
+     * Updating a question in the database.
+     *
+     * @param question to update
+     */
+    @Override
+    public void update(Question question) {
+        // TODO: REFACTOR!
+        // nulling out id fields of the alternatives.
+        question.getAlternativeList().forEach(alternative -> alternative.setId(null));
+
+        Session session = factory.getCurrentSession();
+        Question q = session.get(Question.class, question.getId());
+
+        // If no question exists with the given id, save new
+        if (q == null) {
+            question.validateAlternatives();
+            session.save(question);
+        } else {
+            q.updateAlternativeList(question.getAlternativeList());
+            q.setQuestionTxt(question.getQuestionTxt());
+        }
     }
 
     /**
@@ -53,11 +82,8 @@ public class QuizDao implements Dao<Question> {
     @Override
     public void delete(int id) {
         Session session = factory.getCurrentSession();
-        Query query =
-                session.createQuery("delete from Question where id=:qId");
-        query.setParameter("qId", id);
-
-        query.executeUpdate();
+        Question q = session.get(Question.class, id);
+        session.delete(q);
     }
 
     /**
@@ -66,7 +92,7 @@ public class QuizDao implements Dao<Question> {
     @Override
     public void delete(Question question) {
         if (question.getId() == null)
-            throw new IllegalArgumentException("Customer must have valid id");
+            throw new IllegalArgumentException("Question must have valid id");
 
         Session session = factory.getCurrentSession();
         session.delete(question);
