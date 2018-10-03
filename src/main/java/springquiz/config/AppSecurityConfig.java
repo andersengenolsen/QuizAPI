@@ -12,22 +12,18 @@ import org.springframework.security.core.userdetails.User;
 @Configuration
 @EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         User.UserBuilder users = User.withDefaultPasswordEncoder();
 
         auth.inMemoryAuthentication()
-                .withUser(users.username("anders").password("test123").roles("admin"))
-                .withUser(users.username("anders2").password("test123").roles("user"));
+                .withUser(users.username("admin").password("adminpass").roles("admin"));
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/questions/**").hasAnyRole("admin", "user")
                 .antMatchers(HttpMethod.POST, "/api/questions/").hasRole("admin")
                 .antMatchers(HttpMethod.PUT, "/api/questions/").hasRole("admin")
                 .antMatchers(HttpMethod.DELETE, "/api/questions/**").hasRole("admin")
@@ -36,7 +32,6 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
     }
 
 }
