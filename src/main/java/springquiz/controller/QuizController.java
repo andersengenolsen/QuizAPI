@@ -15,7 +15,7 @@ import java.util.List;
  * @author Anders Engen Olsen
  */
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api")
 public class QuizController {
 
     @Autowired
