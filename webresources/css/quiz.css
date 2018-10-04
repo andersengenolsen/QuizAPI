@@ -100,12 +100,6 @@ h2 {
     font-size: 3em;
 }
 
-.bottom .btn {
-    position:absolute;
-    bottom: 2%;
-    right: 10%;
-}
-
 .quiz-modal .btn {
     display: block;
     width: 100%;
@@ -141,6 +135,4 @@ h2 {
         left: 5%;
         right: 5%;
     }
-
-
 }
