@@ -1,46 +1,5 @@
-// Class representing a question
-class Question {
-    // Constructing question
-    constructor(questionTxt, ...alternatives) {
-        this.questionTxt = questionTxt;
-        this.alternatives = alternatives;
-    }
-}
-
-// Class representing alternative
-// Fed into question
-class Alternative {
-    constructor(alternativeTxt, isCorrect = false) {
-        this.alternativeTxt = alternativeTxt;
-        this.isCorrect = isCorrect;
-    }
-}
-
-// Controller for calls against the API
-var ApiController  = (function() {
-
-    // Currently only creating dummy objects
-    var fetchFromApi = function(url) {
-        var q = new Question("What is Java?", new Alternative("Programming language", true),
-                             new Alternative("Car"));
-        var q2 = new Question("What is Spring?", new Alternative("Framework", true),
-                              new Alternative("Car"));
-
-        var arr = [q,q2];
-        return arr;
-    };
-
-    // Public methods
-    return {
-        // Returning question list
-        getQuestionList: function () {
-            return fetchFromApi("url");
-        }
-    };
-})();
-
 // Controller of the actual Quiz
-var QuizController = (function() {
+define(function() {
 
     // List of questions in quiz
     var quizList;
@@ -167,6 +126,8 @@ var QuizController = (function() {
 
         // Setting quiz list and starting quiz
         setQuizList: function(qList) {
+            if(qList.length == 0)
+                return;
             quizList = qList;
             fadeDisplay(true);
             modalDisplay(true);
@@ -192,46 +153,4 @@ var QuizController = (function() {
             reset();
         }
     };
-})();
-
-
-// Global control for the app flow
-var AppController = (function(apiCtrl, quizCtrl) {
-
-    var setEventListeners = function() {
-        var DOM = quizCtrl.getDomStrings();
-
-        // Click listener for "start quiz" button
-        document.querySelector(DOM.startQuizSel).addEventListener("click", function() {
-            var qList = apiCtrl.getQuestionList();
-            quizCtrl.setQuizList(qList);    
-        });
-
-        // Click listener for all alternatives in the quiz modal
-        document.querySelector(DOM.alternativesSel)
-            .addEventListener("click", function(event) {
-
-            // Fetching ID
-            var itemId = event.target.id.split("-");
-            var id = parseInt(itemId[1]);
-
-            // Checking answer
-            quizCtrl.answer(id);
-        });
-        
-        // Resetting quiz if click outside modal
-        document.querySelector(DOM.fadeBgSel)
-        .addEventListener("click", function() {
-           quizCtrl.reset(); 
-        });
-
-    };
-
-    return {
-        init: function() {
-            setEventListeners();
-        }
-    }
-})(ApiController, QuizController);
-
-AppController.init();
+});
