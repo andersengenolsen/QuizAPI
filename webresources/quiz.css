@@ -1,0 +1,146 @@
+
+body {
+    background: #90CAF9; /* For browsers that do not support gradients */
+    font-family: "Lobster";
+    background:-moz-linear-gradient(top, #666, #CCC);
+    background:-webkit-gradient(linear, left top, left bottom, from(#CFD8DC), to(#78909C));
+    margin: 0;
+    padding: 0;
+}
+
+/* -- DIVS -- */
+
+.container {
+    position: relative;
+    height: 100%;
+}
+
+.main {
+    position: relative;
+    height: 100%;
+    z-index: 1;
+} 
+
+/* Fading background */
+.faded {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 2;
+    display: none;
+}
+
+.quiz-modal {
+    margin: auto;
+    width: 50%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    color: #03A9F4;
+    right: 24.5%;
+    left: 24.5%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    background: #FAFAFA;
+    border-radius: 20px;
+    padding: 1%;
+    z-index: 3;
+    display: none;
+}
+
+.start-quiz {
+    text-align: center;
+    width: 80%;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    left: 10%;
+}
+
+/* -- HEADINGS -- */
+h1, h2 {
+    text-align: center;
+    color: #03A9F4;
+    font-size: 5em;
+    margin: 0;
+    padding:0;
+}
+
+h2 {
+    font-size: 2.8em;
+}
+
+/* -- BUTTONS -- */
+
+.btn {
+    text-decoration: none;
+    background: #03A9F4;    
+    padding: .5em;
+    border-radius: 10px;
+    transition: background 0.5s ease-in-out;
+    color: white;
+    font-size: 2em;
+}
+
+.btn.sm {
+    padding: .2em;
+    font-size: 1em;
+}
+
+.btn:hover {
+    background: #0277BD;
+}
+
+
+.start-quiz .btn {
+    display: block;
+    font-size: 3em;
+}
+
+.bottom .btn {
+    position:absolute;
+    bottom: 2%;
+    right: 10%;
+}
+
+.quiz-modal .btn {
+    display: block;
+    width: 100%;
+    margin:auto;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* -- MOBILE -- */
+
+@media only screen and (max-width: 800px) {
+    h1 {
+        font-size: 2.5em;
+    }
+    
+    h2 {
+        font-size: 1.5em;
+    }
+
+    .start-quiz .btn {
+        font-size: 2em;
+    }
+
+    .btn {
+        padding: .5em;
+        border-radius: 5px;
+        font-size: 1.2em;
+    }
+    
+    .quiz-modal {
+        padding: 5%;
+        width: 80%;
+        left: 5%;
+        right: 5%;
+    }
+
+
+}

@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <link href = "quiz.css" rel = "stylesheet"/>
+        <title>Spring Quiz</title>
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    </head>
+    <body>
+
+        <div class =  "container">
+            <div class = "faded"></div>
+            <div class = "main">
+                <div class = "top">
+                    <h1>Spring Quiz</h1>
+                </div>
+                <div class = "start-quiz">
+                    <a class = "btn" id = "launch-quiz" href = "#">Start quiz</a>
+                </div>
+                <div class = "bottom">
+                    <a class = "btn" href = "/admin">Admin login</a>
+                </div>
+            </div>
+            <div class = "quiz-modal">
+                <h2 id = "question-txt">Question text</h2>
+                <div class ="alternatives">
+                    <!-- Alternatives will be added here in this format:
+                        <input type = "button" class = "btn sm" value = "%alternative%" id = "alternative-%id%">
+                    !-->
+                </div>
+            </div>
+        </div>
+        <script src = "quiz.js"></script>
+    </body>
+</html>
