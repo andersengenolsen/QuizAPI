@@ -86,12 +86,12 @@ var QuizController = (function() {
 
         document.querySelector(DOMStrings.quizModalSel).style.display = displayType;
     }
-    
+
     // Checking if chosen alternative is correct
     var checkInput = function(alternative) {
         return alternative.isCorrect ? 1 : 0; 
     };
-    
+
     // Running quiz, showing question in qList with index num
     var runQuiz = function(qList, num) {
         // Clearing content if not first question
@@ -101,16 +101,16 @@ var QuizController = (function() {
         // Setting new question
         showQuestion(qList[num]);
     };
-    
+
     // Adding question to the UI
     var showQuestion = function(question) {
         // Setting question header
         document.querySelector(DOMStrings.questionTxtSel)
             .innerHTML = question.questionTxt;
-        
+
         // Container for alternatives
         var htmlContainer = DOMStrings.alternativesSel;
-        
+
         // Adding alternatives to the UI
         question.alternatives.forEach((curr, num) => {
             var altHtml = alternativeHtml
@@ -120,24 +120,24 @@ var QuizController = (function() {
                 .insertAdjacentHTML("beforeend",altHtml);
         });
     };
-    
+
     // Checking whether an answer is correct or not
     var checkAnswer = function(id) {
         // Looking up alternative
         alt = quizList[current].alternatives[id];
-        
+
         if(alt.isCorrect)
             score++;
-        
+
         current++;
-        
+
         // Continue quiz, or show summary?
         if (current < quizList.length)
             runQuiz(quizList, current);
         else
             showSummary();
     };
-    
+
     // Clearing content in quiz modal
     var clearContent = function() {
         var container = document.querySelector(DOMStrings.alternativesSel);
@@ -146,13 +146,14 @@ var QuizController = (function() {
         while(inputs[0])
             inputs[0].remove();
     }
-    
+
     // Show summary, currently writing to console..
     var showSummary = function() {
-        console.log("You scored " + score);
-        reset();
+        document.querySelector(DOMStrings.questionTxtSel)
+            .innerHTML = `You scored ${score} out of ${current}`;
+        clearContent();
     }
-    
+
     // Resetting, called when quiz is finished
     var reset = function() {
         clearContent();
@@ -163,7 +164,7 @@ var QuizController = (function() {
     }
 
     return {
-        
+
         // Setting quiz list and starting quiz
         setQuizList: function(qList) {
             quizList = qList;
@@ -171,20 +172,24 @@ var QuizController = (function() {
             modalDisplay(true);
             runQuiz(qList, 0);
         },
-        
+
         // Returning score
         getScore: function() {
             return score; 
         }, 
-        
+
         // Returning DOMStrings
         getDomStrings: function() {
             return DOMStrings;
         },
-        
+
         // Loading id of chosen answer
         answer: function(id) {
             checkAnswer(id);
+        },
+
+        reset: function() {
+            reset();
         }
     };
 })();
@@ -195,24 +200,30 @@ var AppController = (function(apiCtrl, quizCtrl) {
 
     var setEventListeners = function() {
         var DOM = quizCtrl.getDomStrings();
-        
+
         // Click listener for "start quiz" button
         document.querySelector(DOM.startQuizSel).addEventListener("click", function() {
             var qList = apiCtrl.getQuestionList();
             quizCtrl.setQuizList(qList);    
         });
-        
+
         // Click listener for all alternatives in the quiz modal
         document.querySelector(DOM.alternativesSel)
             .addEventListener("click", function(event) {
-            
+
             // Fetching ID
             var itemId = event.target.id.split("-");
             var id = parseInt(itemId[1]);
-            
+
             // Checking answer
             quizCtrl.answer(id);
-        })
+        });
+        
+        // Resetting quiz if click outside modal
+        document.querySelector(DOM.fadeBgSel)
+        .addEventListener("click", function() {
+           quizCtrl.reset(); 
+        });
 
     };
 
