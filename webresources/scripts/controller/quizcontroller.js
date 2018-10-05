@@ -85,7 +85,7 @@ define(function() {
         // Looking up alternative
         alt = quizList[current].alternatives[id];
 
-        if(alt.isCorrect)
+        if(alt.correct)
             score++;
 
         current++;

@@ -26,7 +26,7 @@ define(["model/question"], function(Question) {
     return {
         // Returning question list
         fetchData: function ( ctrl) {
-            return fetchFromApi("http://localhost:8081/api/questions", ctrl);
+            return fetchFromApi("https://webapps.andersengenolsen.com/SpringQuizApi_war/quiz/api/questions", ctrl);
         }
     };
 });
