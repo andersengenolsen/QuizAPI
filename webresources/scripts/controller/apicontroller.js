@@ -44,12 +44,12 @@ define(["model/question", "model/category"], function(Question, Category) {
     return {
         // Returning question list
         fetchData: function (category, ctrl) {
-            var url = "http://localhost:8081/quiz/api/questions/category/" + category; 
+            var url = "https://webapps.andersengenolsen.com/SpringQuizApi_war/quiz/api/questions/category/" + category; 
             return fetchFromApi(url, ctrl);
         }, 
         
         fetchCategories: function(ctrl) {
-            return fetchCategories("http://localhost:8081/quiz/api/categories", ctrl);
+            return fetchCategories("https://webapps.andersengenolsen.com/SpringQuizApi_war/quiz/api/categories", ctrl);
         }
     };
 });
