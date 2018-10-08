@@ -4,10 +4,13 @@ define(["controller/apicontroller", "controller/quizcontroller"],
 
     var setEventListeners = function() {
         var DOM = quizCtrl.getDomStrings();
-
-        // Click listener for "start quiz" button
-        document.querySelector(DOM.startQuizSel).addEventListener("click", function() {
-            apiCtrl.fetchData(quizCtrl);
+        
+        // Click listener for all categories
+        document.querySelector(DOM.startQuizSel)
+            .addEventListener("click", function(event) {
+                
+            var category = event.target.id;
+            apiCtrl.fetchData(category, quizCtrl);
         });
 
         // Click listener for all alternatives in the quiz modal
@@ -36,6 +39,7 @@ define(["controller/apicontroller", "controller/quizcontroller"],
     return {
         init: function() {
             setEventListeners();
+            apiCtrl.fetchCategories(quizCtrl);
         }
     }
 });

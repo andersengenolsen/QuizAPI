@@ -2,8 +2,10 @@ package springquiz.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springquiz.entity.Category;
 import springquiz.entity.Question;
 import springquiz.exception.QuestionNotFoundException;
+import springquiz.service.QuizService;
 import springquiz.service.Service;
 
 import java.util.List;
@@ -19,14 +21,17 @@ import java.util.List;
 public class QuizController {
 
     @Autowired
-    private Service<Question> service;
+    private QuizService quizService;
+
+    @Autowired
+    private Service<Category> catService;
 
     /**
      * @return List of all questions in database
      */
     @GetMapping("/questions")
     public List<Question> getAllQuestions() {
-        return service.getAll();
+        return quizService.getAll();
     }
 
     /**
@@ -36,12 +41,12 @@ public class QuizController {
      */
     @GetMapping("/questions/{questionId}")
     public Question getQuestion(@PathVariable int questionId) {
-        Question question = service.get(questionId);
+        Question question = quizService.get(questionId);
 
         if (question == null)
             throw new QuestionNotFoundException("Question not found - " + questionId);
 
-        return service.get(questionId);
+        return quizService.get(questionId);
     }
 
     /**
@@ -53,7 +58,7 @@ public class QuizController {
         // Setting id to null, to insert regardless of the id.
         // Avoiding update in database on POST requests
         question.setId(null);
-        service.save(question);
+        quizService.save(question);
         return question;
     }
 
@@ -65,7 +70,7 @@ public class QuizController {
      */
     @PutMapping("/questions")
     public Question updateQuestion(@RequestBody Question question) {
-        service.update(question);
+        quizService.update(question);
         return question;
     }
 
@@ -78,15 +83,37 @@ public class QuizController {
      */
     @DeleteMapping("/questions/{questionId}")
     public String deleteQuestion(@PathVariable int questionId) {
-        Question q = service.get(questionId);
+        Question q = quizService.get(questionId);
 
         if (q == null)
             throw new QuestionNotFoundException("Question not found, id - " + questionId);
 
-        service.delete(q);
+        quizService.delete(q);
 
         return "Deleted question id - " + questionId;
     }
 
+    /**
+     * Fetching questions by difficulty
+     *
+     * @param catName difficulty name
+     * @return List of questions
+     */
+    @GetMapping("/questions/category/{catName}")
+    public List<Question> getQuestionByCat(@PathVariable String catName) {
+        List<Question> questions = quizService.getByDifficulty(new Category(catName));
 
+        if (questions == null)
+            throw new QuestionNotFoundException("Questions with category " + catName + " not found");
+
+        return questions;
+    }
+
+    /**
+     * @return All quiz categories.
+     */
+    @GetMapping("/categories")
+    public List<Category> getCategories() {
+        return catService.getAll();
+    }
 }

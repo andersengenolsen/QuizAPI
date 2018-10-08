@@ -4,6 +4,9 @@ define(function() {
     // List of questions in quiz
     var quizList;
 
+    // List of categories
+    var categoryList;
+
     // Current score
     var score = 0;
 
@@ -12,15 +15,18 @@ define(function() {
 
     // DOMStrings
     var DOMStrings = {
-        startQuizSel: "#launch-quiz",
+        startQuizSel: ".start-quiz",
         fadeBgSel: ".faded",
         quizModalSel: ".quiz-modal",
         questionTxtSel : "#question-txt",
         alternativesSel : ".alternatives"
     };
 
+    // HTML for categories list
+    var categoryHtml = '<a class = "btn" id = "%category%" href = "#">%out%</a>';
     // Html for an alternative input button
     var alternativeHtml = '<input type = "button" class = "btn sm" value = "%alternative%" id = "alternative-%id%">';
+
 
     // Setting fade display background to either "block" or "hidden"
     var fadeDisplay = function(isFaded) {
@@ -44,7 +50,7 @@ define(function() {
             displayType = "none";
 
         document.querySelector(DOMStrings.quizModalSel).style.display = displayType;
-    }
+    };
 
     // Checking if chosen alternative is correct
     var checkInput = function(alternative) {
@@ -77,6 +83,20 @@ define(function() {
             .replace("%alternative%", curr.alternativeTxt);
             document.querySelector(htmlContainer)
                 .insertAdjacentHTML("beforeend",altHtml);
+        });
+    };
+    
+    // Populating list with categories
+    var populateCategories = function(cList) {
+        var htmlContainer = DOMStrings.startQuizSel;
+
+        cList.forEach((curr) => {
+            var catHtml = categoryHtml
+            .replace("%category%", curr.name)
+            .replace("%out%", curr.name);
+
+            document.querySelector(htmlContainer)
+                .insertAdjacentHTML("beforeend", catHtml);
         });
     };
 
@@ -132,6 +152,10 @@ define(function() {
             fadeDisplay(true);
             modalDisplay(true);
             runQuiz(qList, 0);
+        },
+
+        setCategoryList: function(cList) {
+            populateCategories(cList);
         },
 
         // Returning score

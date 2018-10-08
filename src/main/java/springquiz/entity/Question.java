@@ -1,5 +1,7 @@
 package springquiz.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -22,6 +24,12 @@ public class Question {
             cascade = {CascadeType.ALL},
             orphanRemoval = true)
     private Set<Alternative> alternativeList;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_category")
+    @NotNull
+    // TODO: Cascade on category delete.
+    private Category category;
 
     public Question() {
 
@@ -102,5 +110,14 @@ public class Question {
             return;
 
         alternativeList.forEach(alternative -> alternative.setQuestion(this));
+    }
+
+    @NotNull
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(@NotNull Category category) {
+        this.category = category;
     }
 }
