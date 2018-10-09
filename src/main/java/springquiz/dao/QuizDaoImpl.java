@@ -20,7 +20,7 @@ public class QuizDaoImpl implements QuizDao {
     private SessionFactory factory;
 
     @Autowired
-    private DifficultyDao difficultyDao;
+    private CategoryDao categoryDao;
 
     /**
      * @return all questions
@@ -44,10 +44,10 @@ public class QuizDaoImpl implements QuizDao {
         Session session = factory.getCurrentSession();
         question.validateAlternatives();
 
-        Category diff = difficultyDao.findByName(question.getCategory().getName());
+        Category diff = categoryDao.findByName(question.getCategory().getName());
 
         if (diff == null)
-            difficultyDao.save(question.getCategory());
+            categoryDao.save(question.getCategory());
         else
             question.setCategory(diff);
 
@@ -118,7 +118,7 @@ public class QuizDaoImpl implements QuizDao {
     public List<Question> getByDifficulty(Category category) {
         Session session = factory.getCurrentSession();
 
-        Category cat = difficultyDao.findByName(category.getName());
+        Category cat = categoryDao.findByName(category.getName());
 
         if (cat == null)
             return null;

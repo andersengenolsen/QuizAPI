@@ -25,7 +25,7 @@ public class Question {
             orphanRemoval = true)
     private Set<Alternative> alternativeList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_category")
     @NotNull
     // TODO: Cascade on category delete.

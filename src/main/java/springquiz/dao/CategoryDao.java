@@ -5,6 +5,6 @@ import springquiz.entity.Category;
 /**
  * DAO against {@link Category} entity.
  */
-public interface DifficultyDao extends Dao<Category> {
+public interface CategoryDao extends Dao<Category> {
     Category findByName(String name);
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 // TODO: Implement DifficultyDAO endpoints
-class DifficultyDaoImpl implements DifficultyDao {
+class CategoryDaoImpl implements CategoryDao {
 
     @Autowired
     private SessionFactory factory;
@@ -28,7 +28,7 @@ class DifficultyDaoImpl implements DifficultyDao {
     public Category findByName(String name) {
         Session session = factory.getCurrentSession();
 
-        Query<Category> query = session.createQuery("from Category where name=:name");
+        Query<Category> query = session.createQuery("from Category where name=:name", Category.class);
         query.setParameter("name", name);
 
         try {

@@ -6,7 +6,8 @@ define(["model/question", "model/category"], function(Question, Category) {
         try {
             const result = await fetch(url);
             const data = await result.json();
-
+            
+            console.log(data);
             const qList = [];
 
             // Construction list of questions
@@ -14,7 +15,7 @@ define(["model/question", "model/category"], function(Question, Category) {
                 const question = new Question(curr.questionTxt, curr.alternativeList);
                 qList.push(question);
             });
-
+            
             ctrl.setQuizList(qList);    
 
         } catch(error) {
@@ -26,7 +27,9 @@ define(["model/question", "model/category"], function(Question, Category) {
         try {
             const result = await fetch(url);
             const data = await result.json();
-
+            
+            console.log(data);
+            
             const categoryList = [];
 
             data.forEach((curr) => {
